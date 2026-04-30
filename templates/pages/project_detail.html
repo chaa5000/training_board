@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .detail-container { background: white; padding: 30px; border-radius: 15px; margin-top: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        pre { background: #2d2d2d; color: #ccc; padding: 15px; border-radius: 8px; direction: ltr; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 detail-container">
+                <!-- زر العودة -->
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary mb-4">← العودة للقائمة الرئيسية</a>
+
+                <h1 class="fw-bold mb-4">{{ project.title }}</h1>
+                <!-- تحت سطر العنوان <h1> مباشرة -->
+                
+                <p class="lead text-muted">{{ project.description }}</p>
+
+                <hr>
+
+                <h3 class="mt-4">المكونات المستخدمة:</h3>
+                <ul>
+                    {% for comp in project.components.all %}
+                        <li>{{ comp.name }}</li>
+                    {% endfor %}
+                </ul>
+                 {% if project.image %}
+                     <div class="text-center mb-4">
+                       <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded shadow-sm" style="max-height: 400px; width: 100%; object-fit: cover;">
+                     </div>
+                {% endif %}
+                {% if project.code_snippet %}
+                <h3 class="mt-4">كود البرمجة:</h3>
+                <pre><code>{{ project.code_snippet }}</code></pre>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

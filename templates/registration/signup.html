@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning shadow-sm" dir="rtl" style="text-align: right;">
+    <h2 class="text-center fw-bold">إنشاء حساب جديد</h2>
+    <hr>
+
+    {% include 'parts/alerts.html' %}
+
+    {% if is_added %}
+        <!-- يختفي الفورم بعد التسجيل الناجح ويظهر زر للذهاب للرئيسية -->
+        <div class="text-center py-4">
+            <h4 class="text-success">شكراً لتسجيلك!</h4>
+            <p>سيقوم المدير بمراجعة حسابك قريباً.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">العودة للرئيسية</a>
+        </div>
+        <form method="post" style="display:none;">
+    {% else %}
+        <form method="post">
+    {% endif %}
+
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputFirstName">الاسم الأول</label>
+                <input type="text" class="form-control" name="fname" id="inputFirstName" required value="{{fname}}">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputLastName">اسم العائلة</label>
+                <input type="text" class="form-control" name="lname" id="inputLastName" required value="{{lname}}">
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="inputAddress">العنوان الرئيسي</label>
+            <input type="text" class="form-control" name="address" id="inputAddress" placeholder="اسم الشارع، رقم المنزل" required value="{{address}}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="inputAddress2">تفاصيل العنوان (اختياري)</label>
+            <input type="text" class="form-control" name="address2" id="inputAddress2" placeholder="شقة، طابق، أو علامة مميزة" value="{{address2}}">
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputCity">المدينة</label>
+                <input type="text" class="form-control" name="city" id="inputCity" required value="{{city}}">
+            </div>
+            <div class="form-group col-md-4 mb-3">
+                <label for="inputState">المحافظة / الولاية</label>
+                <input type="text" class="form-control" name="state" id="inputState" required value="{{state}}">
+            </div>
+            <div class="form-group col-md-2 mb-3">
+                <label for="inputZip">الرمز البريدي</label>
+                <input type="text" class="form-control" name="zip" id="inputZip" placeholder="11111" required value="{{zip}}">
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="inputEmail">البريد الإلكتروني</label>
+            <input type="email" class="form-control" name="email" id="inputEmail" placeholder="name@example.com" required value="{{email}}">
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputUsername">اسم المستخدم (للدخول)</label>
+                <input type="text" class="form-control" name="user" id="inputUsername" required value="{{user}}">
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputPassword">كلمة المرور</label>
+                <input type="password" class="form-control" name="pass" id="inputPassword" required value="{{pass}}">
+            </div>
+        </div>
+
+        <div class="form-group mb-4">
+            <div class="form-check p-0">
+                <input type="checkbox" name="terms" id="inputTerms" required style="margin-left: 10px;">
+                <label class="form-check-label" for="inputTerms">أوافق على شروط الاستخدام وسياسة الخصوصية</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-warning w-100 fw-bold" name="btnsignup">إنشاء حساب</button>
+        
+        <div class="text-center mt-3">
+            <p>لديك حساب بالفعل؟ <a href="{% url 'login' %}">تسجيل الدخول من هنا</a></p>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4 text-center">
+                <h2 class="text-primary mb-4">اتصل بنا</h2>
+                <p class="lead">يسعدنا تواصلكم معنا للحصول على الدعم أو لتفعيل حساباتكم.</p>
+                <hr>
+                <div class="my-4">
+                    <p><strong>البريد الإلكتروني:</strong> <br> chaa500@yahoo.com</p>
+                    <p><strong>الهاتف:</strong> <br> 0697300342</p>
+                    <p><strong>المسؤول:</strong> <br> شاعة مراد  (Chaa Mourad)</p>
+                </div>
+                <a href="{% url 'home' %}" class="btn btn-primary">العودة للرئيسية</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

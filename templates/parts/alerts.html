@@ -1,0 +1,18 @@
+{% if messages %}
+    <div class="messages-container" dir="rtl">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm text-end" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="left: 0; right: auto;"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<style>
+    /* تنسيق بسيط لضمان ظهور التنبيهات بشكل جيد مع العربية */
+    .alert-dismissible {
+        padding-left: 3rem;
+        padding-right: 1.25rem;
+    }
+</style>
