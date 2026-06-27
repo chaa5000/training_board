@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i_z#^m9ua(hw=fia(%zg5@ytwymsz-nut+r_!7j(o#&5g%(zgn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1']
 
@@ -77,13 +77,15 @@ WSGI_APPLICATION = 'train_board.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'trainingborad_db',  # Le nom exact que vous avez créé
+        'USER': 'postgres',
+        'PASSWORD': 'Chaa101978', # Le mot de passe que vous avez choisi à l'installation
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -107,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'ar'
 
 TIME_ZONE = 'UTC'
 
@@ -123,5 +126,13 @@ LOGOUT_REDIRECT_URL = 'home'
 
 #STATIC_URL = 'static/'
 #STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_URL = '/static/'
+
+# 1. اجعل STATIC_ROOT يشير لمجلد جديد (سيتم إنشاؤه تلقائياً عند عمل collectstatic)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_URL = '/static/'
+
+# 2. تأكد أن المسار هنا يطابق اسم المجلد في جهازك (static)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'train_board/static'),
+]

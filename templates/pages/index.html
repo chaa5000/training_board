@@ -1,70 +1,186 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- تأكد من وجود مكتبة الأيقونات -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 <style>
-    .hero { background-color: #0056D2; color: white; padding: 60px 0; }
-    .card { border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+    /* Hero Section */
+    .hero { background-color: #0056D2; color: white; padding: 80px 0; }
+    
+    /* Project Cards */
+    .card { border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: 0.3s; border-radius: 12px; }
     .card:hover { transform: translateY(-5px); }
-    .status-msg { padding: 40px; border-radius: 10px; background: #f8f9fa; border: 1px dashed #dee2e6; }
+    
+    /* Container for Status Messages */
+    .status-msg-container { margin-top: 50px; }
+    .status-msg { padding: 50px; border-radius: 15px; background: #ffffff; border: 1px solid #f0f0f0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+    /* --- Timeline Fixes --- */
+    .how-it-works-section { padding: 60px 0; background-color: #fff; }
+    
+    .timeline { 
+        position: relative; 
+        max-width: 900px; 
+        margin: 0 auto; 
+        padding-right: 50px; /* مسافة للخط والأيقونات */
+    }
+    
+    /* الخط العمودي المصلح */
+    .timeline::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        bottom: 40px; /* يتوقف عند آخر أيقونة تقريباً */
+        right: 25px; /* وضع الخط في منتصف الدائرة */
+        width: 2px;
+        background: #e9ecef;
+    }
+
+    .timeline-item { 
+        position: relative; 
+        margin-bottom: 60px; 
+        text-align: right; 
+    }
+
+    /* الأيقونة المصلحة */
+    .timeline-icon {
+        position: absolute;
+        right: -50px; /* تخرج للخارج لتتوسط الخط */
+        top: 0;
+        width: 50px;
+        height: 50px;
+        background: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #444;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        z-index: 2;
+        border: 3px solid #fff;
+    }
+
+    /* اللون الأخضر كما في الصورة */
+    .timeline-item.active .timeline-icon {
+        background: #00e676; 
+        color: white;
+    }
+
+    /* محتوى النص مع هامش كافٍ لتجنب التداخل */
+    .timeline-content {
+        padding-right: 25px; /* يبعد النص عن الأيقونة */
+    }
+
+    .step-label { color: #00e676; font-weight: bold; font-size: 0.95rem; margin-bottom: 5px; display: block; }
+    .step-title { font-weight: 800; font-size: 1.6rem; color: #1a1a1a; margin-bottom: 10px; }
+    .step-desc { color: #6c757d; font-size: 1.05rem; line-height: 1.6; }
+
+    /* تنسيق كرت تسجيل الدخول */
+    .cta-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px;
+        border: 1px solid #eee;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    }
 </style>
 
-<!-- Hero Section (يظهر للجميع) -->
+<!-- Hero Section -->
 <header class="hero text-center">
     <div class="container">
-        <h1 class="display-4 fw-bold">Training Board</h1>
-        <p class="lead">منصة تعليمية متكاملة لتنفيذ مشاريع إنترنت الأشياء (IoT) بسهولة.</p>
+        <h1 class="display-4 fw-bold mb-3">Training Board</h1>
+        <p class="lead fs-4">منصة تعليمية متكاملة لتنفيذ مشاريع إنترنت الأشياء (IoT) بسهولة.</p>
     </div>
 </header>
 
 <div class="container my-5" dir="rtl">
     
+    {% if not user.is_authenticated or not user.profile.is_approved %}
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-it-works-section">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-2">كيف تعمل Training Board؟</h2>
+            <p class="text-muted fs-5">مسارك المبسط في 3 خطوات رئيسية للبدء</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Step 1 -->
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="bi bi-person-plus"></i></div>
+                <div class="timeline-content">
+                    <span class="step-label">الخطوة 1</span>
+                    <h3 class="step-title">انشئ حسابك</h3>
+                    <p class="step-desc">قم بتسجيل حسابك الخاص على المنصة للوصول إلى فضاؤك الشخصي والبدء في رحلة التعلم.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="bi bi-cpu"></i></div>
+                <div class="timeline-content">
+                    <span class="step-label">الخطوة 2</span>
+                    <h3 class="step-title">اشتري Training Board using ESP32</h3>
+                    <p class="step-desc">احصل على اللوحة التدريبية الخاصة بنا والمبنية على ESP32 لتتمكن من تطبيق الدروس بشكل ملموس وعملي.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-item active">
+                <div class="timeline-icon"><i class="bi bi-check-lg"></i></div>
+                <div class="timeline-content">
+                    <span class="step-label">الخطوة 3</span>
+                    <h3 class="step-title">استفد من أعمال تطبيقية رائعة</h3>
+                    <p class="step-desc">استخدم Training Board لتنفيذ مشاريع حقيقية، تتبع تقدمك، وطور مهاراتك خطوة بخطوة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <div class="status-msg-container">
     {% if user.is_authenticated %}
-        
         {% if user.profile.is_approved %}
-            <!-- الحالة 1: المستخدم مسجل دخول ومقبول من المدير -->
-            <h2 class="mb-4">المشاريع المتاحة لك</h2>
+            <!-- الحساب مقبول -->
+            <h2 class="fw-bold mb-4">المشاريع المتاحة لك</h2>
             <div class="row">
                 {% for project in projects %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <div class="card-body text-end">
-                            <h5 class="card-title fw-bold">{{ project.title }}</h5>
-                            <p class="card-text text-muted">{{ project.description|truncatewords:20 }}</p>
-                            <a href="{% url 'project_detail' project.id %}" class="btn btn-primary w-100">عرض الدرس</a>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">{{ project.title }}</h5>
+                            <p class="card-text text-muted">{{ project.description|truncatewords:15 }}</p>
+                            <a href="{% url 'project_detail' project.id %}" class="btn btn-primary w-100 mt-2">عرض الدرس</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <p class="text-center">لا توجد مشاريع مضافة حالياً.</p>
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">لا توجد مشاريع مضافة حالياً.</p>
+                </div>
                 {% endfor %}
             </div>
-
         {% else %}
-            <!-- الحالة 2: المستخدم مسجل دخول لكن بانتظار موافقة المدير -->
+            <!-- قيد المراجعة -->
             <div class="status-msg text-center">
-                <div class="mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#ffc107" class="bi bi-clock-history" viewBox="0 0 16 16">
-                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.453l.637-.77a8.106 8.106 0 0 1 .501.517l-.699.706zm1.103 1.054c.231.25.437.517.618.799l.83-.556a9.011 9.011 0 0 0-.706-.914l-.742.671zM14.5 10a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm-1.5 4.5A1.5 1.5 0 1 1 14.5 16a1.5 1.5 0 0 1-1.5-1.5z"/>
-                        <path d="M8.5 5a.5.5 0 0 0-1 0v3.3a.5.5 0 0 0 .245.433l2.5 1.5a.5.5 0 0 0 .51-.866L8.5 8.145V5z"/>
-                    </svg>
-                </div>
-                <h3 class="fw-bold">حسابك قيد المراجعة</h3>
-                <p class="text-muted">مرحباً {{ user.username }}، لقد استلمنا طلبك بنجاح. سيتم تفعيل الكورسات لك فور قيام المدير بمراجعة حسابك وقبوله.</p>
-                <p>يرجى المحاولة لاحقاً أو التواصل مع الإدارة.</p>
+                <i class="bi bi-clock-history text-warning" style="font-size: 3rem;"></i>
+                <h3 class="fw-bold mt-3">حسابك قيد المراجعة</h3>
+                <p class="text-muted">مرحباً {{ user.username }}، طلبك بانتظار موافقة الإدارة لتتمكن من البدء.</p>
             </div>
         {% endif %}
-
     {% else %}
-        <!-- الحالة 3: زائر غير مسجل دخول -->
-        <div class="status-msg text-center">
-            <h3 class="fw-bold text-primary">استكشف عالم الإلكترونيات</h3>
-            <p class="mb-4">يجب عليك تسجيل الدخول أو إنشاء حساب جديد للوصول إلى المشاريع التعليمية.</p>
+        <!-- غير مسجل دخول -->
+        <div class="cta-card text-center">
+            <h3 class="fw-bold text-primary mb-3">استكشف عالم الإلكترونيات</h3>
+            <p class="mb-4 text-muted">يجب عليك تسجيل الدخول أو إنشاء حساب جديد للوصول إلى المشاريع التعليمية.</p>
             <div class="d-flex justify-content-center gap-3">
-                <a href="{% url 'login' %}" class="btn btn-primary px-4">تسجيل الدخول</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-primary px-4">إنشاء حساب جديد</a>
+                <a href="{% url 'login' %}" class="btn btn-primary px-5 py-2">تسجيل الدخول</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary px-5 py-2">إنشاء حساب جديد</a>
             </div>
         </div>
     {% endif %}
+    </div>
 
 </div>
 {% endblock %}
